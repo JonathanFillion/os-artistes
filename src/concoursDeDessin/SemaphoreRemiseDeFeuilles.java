@@ -1,11 +1,14 @@
 package concoursDeDessin;
 
-public class Semaphore {
+public class SemaphoreRemiseDeFeuilles {
 	private int valeur;
 	private int nbWait = 0;
-	
-	public Semaphore(int i) {
+	private String action;
+	private int feuillesRemises = 0;
+
+	public SemaphoreRemiseDeFeuilles(int i, String action) {
 		this.valeur = i;
+		this.action = action;
 	}
 
 	public synchronized void P() {
@@ -16,17 +19,22 @@ public class Semaphore {
 			} catch (InterruptedException e) {
 			}
 		}
+		
 		try {
-			Thread.sleep(8);
+			Thread.sleep(1000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		valeur--;
+		feuillesRemises++;
+		System.out.println(Thread.currentThread().getName() + " remet un dessin #" + this.feuillesRemises);
 	}
 
 	public synchronized void V() {
 		valeur++;
+		// System.out.println(Thread.currentThread().getName() + " a fini de "+
+		// this.action);
 		if (nbWait > 0) {
 			nbWait--;
 			notify();

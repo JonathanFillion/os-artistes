@@ -3,16 +3,16 @@ package concoursDeDessin;
 
 public class ConcoursMain {
 
-	Semaphore prendreFeuille;
-	Semaphore remettreDessin;
+	int nbFeuille;
+	Semaphore prendreFeuille = new Semaphore(1);
+	Semaphore remettreDessin = new Semaphore(1);
 	Artiste[] artistes;
 	
 	public ConcoursMain() {
-		prendreFeuille = new Semaphore(1, "prendre une feuille");
-		remettreDessin = new Semaphore(1, "remettre un dessin");
 		artistes = new Artiste[5];
+		
 		for(int i = 0 ; i < artistes.length; i++) {
-			artistes[i] = new Artiste(i, this.prendreFeuille, this.remettreDessin);
+			artistes[i] = new Artiste(i, prendreFeuille, remettreDessin);
 		}
 		for(int i = 0; i < artistes.length; i++) {
 			artistes[i].start();
