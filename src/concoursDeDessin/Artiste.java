@@ -2,6 +2,7 @@ package concoursDeDessin;
 
 public class Artiste extends Thread {
 	boolean aUneFeuille = false;
+	boolean ilNeRestePlusDeFeuilles = false;
 	int feuilleId;
 	// Crayon Rouge, Bleu, Jaune, Vert
 	boolean[] crayonsPossede = { false, false, false, false };
@@ -28,6 +29,8 @@ public class Artiste extends Thread {
 					PileDeFeuilles.nombreDeFeuilles--;
 					this.aUneFeuille = true;
 					System.out.println(Thread.currentThread().getName() + " prend " + feuilleId);
+				} else {
+					ilNeRestePlusDeFeuilles = true;
 				}
 				pileDeFeuilleSemaphore.V();
 			}
@@ -75,7 +78,10 @@ public class Artiste extends Thread {
 				remettreDessinSemaphore.V();
 			}
 
-			
+			if(ilNeRestePlusDeFeuilles && !possedeTousLesCrayons()) {
+				System.out.println(Thread.currentThread().getName() + " termine au complet ");
+				break;
+			}
 		}
 	}
 
