@@ -58,6 +58,15 @@ public class Artiste extends Thread {
 					break;
 				}
 			}
+			
+			if (possedeTousLesCrayons()) {
+				for (int i = 0; i < 4; i++) {
+					crayonsPossede[i] = false;
+					crayonsSemaphores[i].V();
+				}
+				System.out.println(Thread.currentThread().getName() + " a relaché tous ses crayons");
+			}
+			
 			if (this.aUneFeuille) {
 				remettreDessinSemaphore.P();
 				this.aUneFeuille = false;
@@ -66,13 +75,7 @@ public class Artiste extends Thread {
 				remettreDessinSemaphore.V();
 			}
 
-			if (possedeTousLesCrayons()) {
-				for (int i = 0; i < 4; i++) {
-					crayonsPossede[i] = false;
-					crayonsSemaphores[i].V();
-				}
-				System.out.println(Thread.currentThread().getName() + " a relaché tous ses crayons");
-			}
+			
 		}
 	}
 
