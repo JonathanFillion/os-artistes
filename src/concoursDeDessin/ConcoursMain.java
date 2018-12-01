@@ -10,7 +10,8 @@ public class ConcoursMain {
 	Semaphore crayonJauneSemaphore = new Semaphore(3);
 	Semaphore crayonVertSemaphore = new Semaphore(3);
 	Artiste[] artistes;
-
+	Juge juge;
+	
 	public ConcoursMain() {
 		artistes = new Artiste[5];
 
@@ -18,10 +19,14 @@ public class ConcoursMain {
 			artistes[i] = new Artiste(i, prendreFeuille, remettreDessin, new Semaphore[] { crayonRougeSemaphore,
 					crayonBleuSemaphore, crayonJauneSemaphore, crayonVertSemaphore });
 		}
+		
+		juge = new Juge(remettreDessin, artistes);
+		
 		for (int i = 0; i < artistes.length; i++) {
 			artistes[i].start();
 		}
 
+		juge.start();
 	}
 
 	public static void main(String[] args) {
