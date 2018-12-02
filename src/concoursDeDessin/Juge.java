@@ -1,5 +1,12 @@
 package concoursDeDessin;
 
+/**
+ * 
+ * Attend que tous les artistes mettrent leur statut à "terminer"
+ * Ensuite genere la pige au hasard et annonce le vainqueur
+ *
+ */
+
 public class Juge extends Thread{
 
 	Semaphore pileDeDessinSemaphore;
@@ -20,7 +27,7 @@ public class Juge extends Thread{
 		System.out.println("LE GAGNANT EST ... " + parametresPubliques.dessinRemis[rand]);
 		
 	}
-	
+	//Vérif que les artistes ont tous fini
 	public boolean artistesOntFini() {
 		boolean ontFini = true;
 		for(int i = 0; i < artistes.length;i++) {

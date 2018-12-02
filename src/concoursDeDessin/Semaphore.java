@@ -1,5 +1,11 @@
 package concoursDeDessin;
 
+/**
+ * Classique semaphore
+ * @author jo
+ *
+ */
+
 public class Semaphore {
 	private int valeur;
 	private int nbWait = 0;

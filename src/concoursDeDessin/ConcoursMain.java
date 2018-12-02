@@ -1,5 +1,16 @@
 package concoursDeDessin;
 
+/**
+ * 
+ * @author jo
+ *
+ *La main est ici
+ *Init des semaphore, artistes et juge.
+ *
+ *
+ */
+
+
 public class ConcoursMain {
 
 	int nbFeuille;

@@ -1,5 +1,12 @@
 package concoursDeDessin;
 
+
+/**
+ *
+ * Permet d'entrer le param publique pour le nombre de feuilles
+ * 
+ * 
+ **/
 public class parametresPubliques {
 	
 	//Ajuster le nombre de feuilles ici

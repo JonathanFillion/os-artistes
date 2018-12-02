@@ -110,19 +110,26 @@ public class Artiste extends Thread {
 			}
 		}
 	}
-
+	/**
+	 * Fonction de debug
+	 */
 	public void augmenterCrayonsPubliques() {
 		sharedData.nombreDeFeuillesParArtiste[id]++;
 		if (debug)
 			System.out.println(Arrays.toString(sharedData.nombreDeFeuillesParArtiste) + " par artiste " + this.id);
 	}
-
+	/**
+	 * Fonction de debug
+	 */
 	public void reinitCrayonsPubliques() {
 		sharedData.nombreDeFeuillesParArtiste[id] = 0;
 		if (debug)
 			System.out.println(Arrays.toString(sharedData.nombreDeFeuillesParArtiste) + " par artiste " + this.id);
 	}
-
+	/**
+	 * Si l'artiste possede tous les crayons necessaires, retourne true
+	 * @return
+	 */
 	public boolean possedeTousLesCrayons() {
 		return crayonsPossede[0] && crayonsPossede[1] && crayonsPossede[2] && crayonsPossede[3];
 	}
