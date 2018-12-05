@@ -1,7 +1,7 @@
 package concoursDeDessin;
 
 /**
- * Classique semaphore
+ * Classique semaphore sans changements
  * @author jo
  *
  */

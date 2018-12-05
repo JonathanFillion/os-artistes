@@ -14,4 +14,5 @@ public class parametresPubliques {
 	
 	static int nombreDeFeuilles = paramInitNombre - 1;
 	static String[] dessinRemis = new String[paramInitNombre];
+	static String sortie = "";
 }

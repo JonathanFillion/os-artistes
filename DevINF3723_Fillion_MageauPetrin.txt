@@ -1,0 +1,103 @@
+
+Artiste 0 fait un dessin sur feuille 0
+Artiste 4 fait un dessin sur feuille 1
+Artiste 3 fait un dessin sur feuille 2
+Artiste 0 a livré un dessin sur feuille 0
+Artiste 1 fait un dessin sur feuille 3
+Artiste 2 fait un dessin sur feuille 4
+Artiste 4 a livré un dessin sur feuille 1
+Artiste 3 a livré un dessin sur feuille 2
+Artiste 0 fait un dessin sur feuille 5
+Artiste 2 a livré un dessin sur feuille 4
+Artiste 1 a livré un dessin sur feuille 3
+Artiste 4 fait un dessin sur feuille 6
+Artiste 3 fait un dessin sur feuille 7
+Artiste 0 a livré un dessin sur feuille 5
+Artiste 2 fait un dessin sur feuille 8
+Artiste 1 fait un dessin sur feuille 9
+Artiste 4 a livré un dessin sur feuille 6
+Artiste 3 a livré un dessin sur feuille 7
+Artiste 0 fait un dessin sur feuille 10
+Artiste 1 a livré un dessin sur feuille 9
+Artiste 0 a livré un dessin sur feuille 10
+Artiste 4 fait un dessin sur feuille 11
+Artiste 2 a livré un dessin sur feuille 8
+Artiste 3 fait un dessin sur feuille 12
+Artiste 1 fait un dessin sur feuille 13
+Artiste 4 a livré un dessin sur feuille 11
+Artiste 0 fait un dessin sur feuille 14
+Artiste 2 fait un dessin sur feuille 15
+Artiste 3 a livré un dessin sur feuille 12
+Artiste 0 a livré un dessin sur feuille 14
+Artiste 1 a livré un dessin sur feuille 13
+Artiste 4 fait un dessin sur feuille 16
+Artiste 2 a livré un dessin sur feuille 15
+Artiste 3 fait un dessin sur feuille 17
+Artiste 0 fait un dessin sur feuille 18
+Artiste 4 a livré un dessin sur feuille 16
+Artiste 1 fait un dessin sur feuille 19
+Artiste 3 a livré un dessin sur feuille 17
+Artiste 2 fait un dessin sur feuille 20
+Artiste 1 a livré un dessin sur feuille 19
+Artiste 4 fait un dessin sur feuille 21
+Artiste 0 a livré un dessin sur feuille 18
+Artiste 3 fait un dessin sur feuille 22
+Artiste 2 a livré un dessin sur feuille 20
+Artiste 1 fait un dessin sur feuille 23
+Artiste 4 a livré un dessin sur feuille 21
+Artiste 0 fait un dessin sur feuille 24
+Artiste 3 a livré un dessin sur feuille 22
+Artiste 2 fait un dessin sur feuille 25
+Artiste 0 a livré un dessin sur feuille 24
+Artiste 1 a livré un dessin sur feuille 23
+Artiste 4 fait un dessin sur feuille 26
+Artiste 3 fait un dessin sur feuille 27
+Artiste 2 a livré un dessin sur feuille 25
+Artiste 0 fait un dessin sur feuille 28
+Artiste 4 a livré un dessin sur feuille 26
+Artiste 1 fait un dessin sur feuille 29
+Artiste 3 a livré un dessin sur feuille 27
+Artiste 2 fait un dessin sur feuille 30
+Artiste 1 a livré un dessin sur feuille 29
+Artiste 0 a livré un dessin sur feuille 28
+Artiste 4 fait un dessin sur feuille 31
+Artiste 3 fait un dessin sur feuille 32
+Artiste 2 a livré un dessin sur feuille 30
+Artiste 1 fait un dessin sur feuille 33
+Artiste 4 a livré un dessin sur feuille 31
+Artiste 0 fait un dessin sur feuille 34
+Artiste 3 a livré un dessin sur feuille 32
+Artiste 2 fait un dessin sur feuille 35
+Artiste 0 a livré un dessin sur feuille 34
+Artiste 1 a livré un dessin sur feuille 33
+Artiste 4 fait un dessin sur feuille 36
+Artiste 3 fait un dessin sur feuille 37
+Artiste 2 a livré un dessin sur feuille 35
+Artiste 0 fait un dessin sur feuille 38
+Artiste 3 a livré un dessin sur feuille 37
+Artiste 1 fait un dessin sur feuille 39
+Artiste 4 a livré un dessin sur feuille 36
+Artiste 2 fait un dessin sur feuille 40
+Artiste 1 a livré un dessin sur feuille 39
+Artiste 0 a livré un dessin sur feuille 38
+Artiste 3 fait un dessin sur feuille 41
+Artiste 4 fait un dessin sur feuille 42
+Artiste 2 a livré un dessin sur feuille 40
+Artiste 1 fait un dessin sur feuille 43
+Artiste 3 a livré un dessin sur feuille 41
+Artiste 0 fait un dessin sur feuille 44
+Artiste 4 a livré un dessin sur feuille 42
+Artiste 2 fait un dessin sur feuille 45
+Artiste 1 a livré un dessin sur feuille 43
+Artiste 0 a livré un dessin sur feuille 44
+Artiste 3 fait un dessin sur feuille 46
+Artiste 4 fait un dessin sur feuille 47
+Artiste 3 a livré un dessin sur feuille 46
+Artiste 2 a livré un dessin sur feuille 45
+Artiste 1 fait un dessin sur feuille 48
+Artiste 0 fait un dessin sur feuille 49
+Artiste 1 a livré un dessin sur feuille 48
+Artiste 0 a livré un dessin sur feuille 49
+Artiste 4 a livré un dessin sur feuille 47
+Tous les fils artistes ont terminé
+LE GAGNANT EST ... Artiste 1 pour le dessin sur la feuille 33

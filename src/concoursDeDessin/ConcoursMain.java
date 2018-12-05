@@ -4,12 +4,10 @@ package concoursDeDessin;
  * 
  * @author jo
  *
- *La main est ici
- *Init des semaphore, artistes et juge.
+ *         La main est ici Init des semaphore, artistes et juge.
  *
  *
  */
-
 
 public class ConcoursMain {
 
@@ -22,7 +20,7 @@ public class ConcoursMain {
 	Semaphore crayonVertSemaphore = new Semaphore(3);
 	Artiste[] artistes;
 	Juge juge;
-	
+
 	public ConcoursMain() {
 		artistes = new Artiste[5];
 
@@ -30,9 +28,9 @@ public class ConcoursMain {
 			artistes[i] = new Artiste(i, prendreFeuille, remettreDessin, new Semaphore[] { crayonRougeSemaphore,
 					crayonBleuSemaphore, crayonJauneSemaphore, crayonVertSemaphore });
 		}
-		
+
 		juge = new Juge(remettreDessin, artistes);
-		
+
 		for (int i = 0; i < artistes.length; i++) {
 			artistes[i].start();
 		}

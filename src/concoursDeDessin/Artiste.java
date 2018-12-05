@@ -2,11 +2,23 @@ package concoursDeDessin;
 
 import java.util.Arrays;
 
+
+/**
+ * 
+ * Puisque les artistes prennent les crayons dans le même ordre, il n'y aura pas d'interblocages.
+ * Par exemple, si art1, art2, art3 réservent le premier crayon. Les autres artistes attendront que le premier crayon soit libérer.
+ * Les autres crayons seront prit par art1, art2, art3, dessineront leur dessin et relacheront ensuite les crayons.
+ *
+ */
+
+
+
 public class Artiste extends Thread {
 	boolean aUneFeuille = false;
 	boolean ilNeRestePlusDeFeuilles = false;
 	boolean debug = false;
 	boolean aFini = false;
+
 	private enum Etat {
 		RIEN, POSSEDE_FEUIL, POSSEDE_FEUIL_ET_CRAYONS, DESSIN_FAIT, INTER
 	}
@@ -80,7 +92,10 @@ public class Artiste extends Thread {
 			}
 			// Pret a dessiner
 			if (etat == Etat.POSSEDE_FEUIL_ET_CRAYONS) {
-				System.out.println(Thread.currentThread().getName() + " fait un dessin sur feuille " + this.feuilleId);
+				String msg = Thread.currentThread().getName() + " fait un dessin sur feuille "
+						+ getRealPageNumber();
+				System.out.println(msg);
+				parametresPubliques.sortie += "\n" + msg;
 				etat = Etat.DESSIN_FAIT;
 				// Relacher les crayons + relacher une semaphore du crayon i
 				for (int i = 0; i < 4; i++) {
@@ -94,9 +109,12 @@ public class Artiste extends Thread {
 			if (etat == Etat.DESSIN_FAIT) {
 				remettreDessinSemaphore.P();
 				etat = Etat.RIEN;
-				parametresPubliques.dessinRemis[feuilleId] = Thread.currentThread().getName();
+				parametresPubliques.dessinRemis[getRealPageNumber()] = Thread.currentThread().getName();
 				// Message d'affichage du devoir -- laisser en place
-				System.out.println(Thread.currentThread().getName() + " a livré un dessin sur feuille " + feuilleId);
+				String msg = Thread.currentThread().getName() + " a livré un dessin sur feuille "
+						+ getRealPageNumber();
+				System.out.println(msg);
+				parametresPubliques.sortie += "\n" + msg;
 				remettreDessinSemaphore.V();
 			}
 
@@ -110,6 +128,7 @@ public class Artiste extends Thread {
 			}
 		}
 	}
+
 	/**
 	 * Fonction de debug
 	 */
@@ -118,6 +137,12 @@ public class Artiste extends Thread {
 		if (debug)
 			System.out.println(Arrays.toString(sharedData.nombreDeFeuillesParArtiste) + " par artiste " + this.id);
 	}
+	//Pour rendre les numeros de pages normaux de 0 a 49
+	public int getRealPageNumber() {
+		return Math.abs((this.feuilleId - parametresPubliques.paramInitNombre + 1));
+	}
+	
+
 	/**
 	 * Fonction de debug
 	 */
@@ -126,8 +151,10 @@ public class Artiste extends Thread {
 		if (debug)
 			System.out.println(Arrays.toString(sharedData.nombreDeFeuillesParArtiste) + " par artiste " + this.id);
 	}
+
 	/**
 	 * Si l'artiste possede tous les crayons necessaires, retourne true
+	 * 
 	 * @return
 	 */
 	public boolean possedeTousLesCrayons() {
