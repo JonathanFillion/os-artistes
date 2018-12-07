@@ -24,6 +24,7 @@ public class ConcoursMain {
 	public ConcoursMain() {
 		artistes = new Artiste[5];
 
+		// Initialisation des artistes
 		for (int i = 0; i < artistes.length; i++) {
 			artistes[i] = new Artiste(i, prendreFeuille, remettreDessin, new Semaphore[] { crayonRougeSemaphore,
 					crayonBleuSemaphore, crayonJauneSemaphore, crayonVertSemaphore });
@@ -31,6 +32,7 @@ public class ConcoursMain {
 
 		juge = new Juge(remettreDessin, artistes);
 
+		// Début du concours
 		for (int i = 0; i < artistes.length; i++) {
 			artistes[i].start();
 		}

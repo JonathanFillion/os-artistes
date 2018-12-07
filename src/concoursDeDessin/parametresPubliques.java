@@ -10,9 +10,10 @@ package concoursDeDessin;
 public class parametresPubliques {
 	
 	//Ajuster le nombre de feuilles ici
-	static int paramInitNombre = 50;
+	static int paramInitNombre = 10;
 	
 	static int nombreDeFeuilles = paramInitNombre - 1;
 	static String[] dessinRemis = new String[paramInitNombre];
 	static String sortie = "";
+	static int nombreDeCrayons = 4;
 }

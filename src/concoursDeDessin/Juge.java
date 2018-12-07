@@ -24,16 +24,18 @@ public class Juge extends Thread{
 	 * et choisi le gagnant, il ecrit aussi dans le fichier
 	 */
 	public void run() {
+		int rand = (int) (Math.random() * (parametresPubliques.paramInitNombre));
 		
 		while(!artistesOntFini());
 		parametresPubliques.sortie += "\nTous les fils artistes ont terminé";
 		System.out.println("Tous les fils artistes ont terminé");
 		
 		pileDeDessinSemaphore.P();
-		int rand = (int) (Math.random() * (parametresPubliques.paramInitNombre));
+		
 		System.out.println("LE GAGNANT EST ... " + parametresPubliques.dessinRemis[rand]+ " pour le dessin sur la feuille " + rand);
 		parametresPubliques.sortie += "\nLE GAGNANT EST ... " + parametresPubliques.dessinRemis[rand] + " pour le dessin sur la feuille " + rand;
 		pileDeDessinSemaphore.V();
+		
 		//Le juge ecrit dans le fichier demande par les exigences
 		try {
 			FileWriter fileWriter = new FileWriter("D:/DevINF3723_Fillion_MageauPetrin.txt");
