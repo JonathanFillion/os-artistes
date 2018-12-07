@@ -14,5 +14,6 @@ public class parametresPubliques {
 	static int nombreDeFeuilles = paramInitNombre - 1;
 	static String[] dessinRemis = new String[paramInitNombre];
 	static String sortie = "";
+	static String fichierDeSortie = "D:/DevINF3723_Fillion_MageauPetrin.txt";
 	static int nombreDeCrayons = 4;
 }
