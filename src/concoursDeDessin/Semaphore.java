@@ -2,6 +2,7 @@ package concoursDeDessin;
 
 /**
  * Classique semaphore sans changements
+ * 
  * @author jo
  *
  */
@@ -9,7 +10,7 @@ package concoursDeDessin;
 public class Semaphore {
 	private int valeur;
 	private int nbWait = 0;
-	
+
 	public Semaphore(int i) {
 		this.valeur = i;
 	}

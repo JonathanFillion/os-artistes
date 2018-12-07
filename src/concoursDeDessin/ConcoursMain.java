@@ -6,7 +6,6 @@ package concoursDeDessin;
  *
  *         La main est ici Init des semaphore, artistes et juge.
  *
- *
  */
 
 public class ConcoursMain {
