@@ -2,20 +2,19 @@ package concoursDeDessin;
 
 import java.util.Arrays;
 
-
 /**
  * 
- * Puisque les artistes prennent les crayons dans le mÃªme ordre, il n'y aura pas d'interblocages.
- * Par exemple, si art1, art2, art3 rÃ©servent le premier crayon. Les autres artistes attendront que le premier crayon soit libÃ©rer.
- * Les autres crayons seront prit par art1, art2, art3, dessineront leur dessin et relacheront ensuite les crayons.
+ * Puisque les artistes prennent les crayons dans le même ordre (d'abord rouge,
+ * puis bleu, etc.), il n'y aura pas d'interblocages. Par exemple, si art1,
+ * art2, art3 réservent le premier crayon. Les autres artistes attendront que
+ * le premier crayon soit libérer. Les autres crayons seront prit par art1,
+ * art2, art3, dessineront leur dessin et relacheront ensuite les crayons.
  *
  */
 
-
-
 public class Artiste extends Thread {
 	boolean aUneFeuille = false;
-	boolean ilNeRestePlusDeFeuilles = false;
+	boolean pileDeFeuillesEstVide = false;
 	boolean debug = false;
 	boolean aFini = false;
 
@@ -25,13 +24,13 @@ public class Artiste extends Thread {
 
 	private Etat etat = Etat.RIEN;
 	int feuilleId;
-	// Crayon Rouge, Bleu, Jaune, Vert
-	boolean[] crayonsPossede = { false, false, false, false };
+	// Crayons Rouge, Bleu, Jaune, Vert
+	boolean[] possedeCrayon = { false, false, false, false };
 	int id;
 	int testNombreDeCrayons = 0;
 	Semaphore pileDeFeuilleSemaphore;
 	Semaphore remettreDessinSemaphore;
-	// Semaphore Crayon Rouge, Bleu, Jaune, Vert
+	// Semaphore des crayons Rouge, Bleu, Jaune, Vert
 	Semaphore[] crayonsSemaphores;
 
 	public Artiste(int id, Semaphore prendreFeuille, Semaphore remettreDessin, Semaphore[] crayons) {
@@ -44,112 +43,120 @@ public class Artiste extends Thread {
 
 	public void run() {
 
-		while (true) {
+		while (this.aFini == false) {
 			// aquerir feuille
 			if (etat == Etat.RIEN) {
-				pileDeFeuilleSemaphore.P();
-				if (parametresPubliques.nombreDeFeuilles >= 0) {
-					feuilleId = parametresPubliques.nombreDeFeuilles;
-					parametresPubliques.nombreDeFeuilles--;
-					etat = Etat.POSSEDE_FEUIL;
-					if (debug)
-						System.out.println(Thread.currentThread().getName() + " prend " + feuilleId);
-				} else {
-					ilNeRestePlusDeFeuilles = true;
-				}
-				pileDeFeuilleSemaphore.V();
+				prendreFeuille();
 			}
+
 			// Aquerir les crayons un a la suite de l'autre
 			while (etat == Etat.POSSEDE_FEUIL) {
-				if (!crayonsPossede[0]) {
-					crayonsSemaphores[0].P();
-					crayonsPossede[0] = true;
-					testNombreDeCrayons++;
-					augmenterCrayonsPubliques();
-				}
-				if (!crayonsPossede[1]) {
-					crayonsSemaphores[1].P();
-					crayonsPossede[1] = true;
-					testNombreDeCrayons++;
-					augmenterCrayonsPubliques();
-				}
-				if (!crayonsPossede[2]) {
-					crayonsSemaphores[2].P();
-					crayonsPossede[2] = true;
-					testNombreDeCrayons++;
-					augmenterCrayonsPubliques();
-				}
-				if (!crayonsPossede[3]) {
-					crayonsSemaphores[3].P();
-					crayonsPossede[3] = true;
-					testNombreDeCrayons++;
-					augmenterCrayonsPubliques();
-				}
-
-				if (possedeTousLesCrayons()) {
-					etat = Etat.POSSEDE_FEUIL_ET_CRAYONS;
-				}
+				prendreCrayons();
 			}
+
 			// Pret a dessiner
 			if (etat == Etat.POSSEDE_FEUIL_ET_CRAYONS) {
-				String msg = Thread.currentThread().getName() + " fait un dessin sur feuille "
-						+ getRealPageNumber();
-				System.out.println(msg);
-				parametresPubliques.sortie += "\n" + msg;
-				etat = Etat.DESSIN_FAIT;
-				// Relacher les crayons + relacher une semaphore du crayon i
-				for (int i = 0; i < 4; i++) {
-					crayonsPossede[i] = false;
-					crayonsSemaphores[i].V();
-					testNombreDeCrayons--;
-				}
-				reinitCrayonsPubliques();
-			}
-			// Remise du dessein
-			if (etat == Etat.DESSIN_FAIT) {
-				remettreDessinSemaphore.P();
-				etat = Etat.RIEN;
-				parametresPubliques.dessinRemis[getRealPageNumber()] = Thread.currentThread().getName();
-				// Message d'affichage du devoir -- laisser en place
-				String msg = Thread.currentThread().getName() + " a livrÃ© un dessin sur feuille "
-						+ getRealPageNumber();
-				System.out.println(msg);
-				parametresPubliques.sortie += "\n" + msg;
-				remettreDessinSemaphore.V();
+				dessiner();
 			}
 
-			if (ilNeRestePlusDeFeuilles && !possedeTousLesCrayons()) {
-				// TODO changer un bool publique afin que fil "juge" declare un gagnant.
+			// Remise du dessin
+			if (etat == Etat.DESSIN_FAIT) {
+				remettreDessin();
+			}
+
+			if (pileDeFeuillesEstVide && !possedeTousLesCrayons()) {
+				// TODO changer un bool publique afin que fil "juge" declare un
+				// gagnant.
 				if (debug) {
 					System.out.println(Thread.currentThread().getName() + " termine au complet ");
 				}
 				this.aFini = true;
-				break;
 			}
 		}
 	}
 
+	private void prendreFeuille() {
+		pileDeFeuilleSemaphore.P();
+		if (parametresPubliques.nombreDeFeuilles >= 0) {
+			feuilleId = parametresPubliques.nombreDeFeuilles;
+			parametresPubliques.nombreDeFeuilles--;
+			etat = Etat.POSSEDE_FEUIL;
+			if (debug)
+				System.out.println(Thread.currentThread().getName() + " prend " + feuilleId);
+		} else {
+			pileDeFeuillesEstVide = true;
+		}
+		Delay.attente(8); // Prendre une nouvelle feuille de papier nécessite un
+							// certain temps
+		pileDeFeuilleSemaphore.V();
+	}
+
+	private void prendreCrayons() {
+		for (int i = 0; i < parametresPubliques.nombreDeCrayons; i++) {
+			if (!possedeCrayon[i]) {
+				crayonsSemaphores[i].P();
+				possedeCrayon[i] = true;
+				testNombreDeCrayons++;
+				augmenterCrayonsPubliques();
+			}
+		}
+
+		if (possedeTousLesCrayons()) {
+			etat = Etat.POSSEDE_FEUIL_ET_CRAYONS;
+		}
+	}
+
+	private void dessiner() {
+		String msg = Thread.currentThread().getName() + " fait un dessin sur feuille " + getRealPageNumber();
+		System.out.println(msg);
+		parametresPubliques.sortie += "\n" + msg;
+		etat = Etat.DESSIN_FAIT;
+
+		// Relacher les crayons et leur semaphore associée
+		for (int i = 0; i < parametresPubliques.nombreDeCrayons; i++) {
+			possedeCrayon[i] = false;
+			crayonsSemaphores[i].V();
+			testNombreDeCrayons--;
+		}
+
+		reinitCrayonsPubliques();
+	}
+
 	/**
-	 * Fonction de debug
+	 * Remettre le dessin au juge et relâcher les semaphores associées
 	 */
+	private void remettreDessin() {
+		remettreDessinSemaphore.P();
+
+		Delay.attente(8); // Retourner un dessin au jury et le placer dans la
+							// pile de remise prend un certain temps
+
+		etat = Etat.RIEN;
+		parametresPubliques.dessinRemis[getRealPageNumber()] = Thread.currentThread().getName();
+		// Message d'affichage du devoir -- laisser en place
+		String msg = Thread.currentThread().getName() + " a livré un dessin sur feuille " + getRealPageNumber();
+		System.out.println(msg);
+		parametresPubliques.sortie += "\n" + msg;
+		remettreDessinSemaphore.V();
+	}
+
 	public void augmenterCrayonsPubliques() {
 		sharedData.nombreDeFeuillesParArtiste[id]++;
-		if (debug)
+		if (debug) {
 			System.out.println(Arrays.toString(sharedData.nombreDeFeuillesParArtiste) + " par artiste " + this.id);
+		}
 	}
-	//Pour rendre les numeros de pages normaux de 0 a 49
+
+	// Pour rendre les numeros de pages normaux de 0 a 49
 	public int getRealPageNumber() {
 		return Math.abs((this.feuilleId - parametresPubliques.paramInitNombre + 1));
 	}
-	
 
-	/**
-	 * Fonction de debug
-	 */
 	public void reinitCrayonsPubliques() {
 		sharedData.nombreDeFeuillesParArtiste[id] = 0;
-		if (debug)
+		if (debug) {
 			System.out.println(Arrays.toString(sharedData.nombreDeFeuillesParArtiste) + " par artiste " + this.id);
+		}
 	}
 
 	/**
@@ -158,6 +165,6 @@ public class Artiste extends Thread {
 	 * @return
 	 */
 	public boolean possedeTousLesCrayons() {
-		return crayonsPossede[0] && crayonsPossede[1] && crayonsPossede[2] && crayonsPossede[3];
+		return possedeCrayon[0] && possedeCrayon[1] && possedeCrayon[2] && possedeCrayon[3];
 	}
 }
