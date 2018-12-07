@@ -1,5 +1,7 @@
 package concoursDeDessin;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -42,7 +44,11 @@ public class Juge extends Thread {
 
 		// Le juge ecrit dans le fichier demande par les exigences
 		try {
-			FileWriter fileWriter = new FileWriter("D:/DevINF3723_Fillion_MageauPetrin.txt");
+			File fichierSortie = new File(parametresPubliques.fichierDeSortie);
+			fichierSortie.createNewFile(); // Crée le fichier, rien ne se passe si le fichier existe déjà
+			FileOutputStream oFile = new FileOutputStream(fichierSortie, false); 
+			
+			FileWriter fileWriter = new FileWriter(parametresPubliques.fichierDeSortie);
 			fileWriter.write(parametresPubliques.sortie);
 			fileWriter.close();
 		} catch (IOException e) {
